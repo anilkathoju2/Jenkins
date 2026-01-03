@@ -48,7 +48,8 @@ sudo rm -f /etc/yum.repos.d/jenkins.repo
 **Add Jenkins repo using curl (recommended)**
 
 sudo curl -fsSL https://pkg.jenkins.io/redhat/jenkins.repo \
--o /etc/yum.repos.d/jenkins.repo
+  -o /etc/yum.repos.d/jenkins.repo
+
 
 
 **Import Jenkins GPG key**
