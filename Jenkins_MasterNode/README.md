@@ -40,40 +40,50 @@ Verify:
 java -version
 
 3. Add Jenkins Repository
-Remove any broken repo (if exists)
+**Remove any broken repo (if exists)**
+
 sudo rm -f /etc/yum.repos.d/jenkins.repo
 
-Add Jenkins repo using curl (recommended)
+**Add Jenkins repo using curl (recommended)**
+
 sudo curl -fsSL https://pkg.jenkins.io/redhat/jenkins.repo \
 -o /etc/yum.repos.d/jenkins.repo
 
-Import Jenkins GPG key
+
+**Import Jenkins GPG key**
+
 sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io-2023.key
 
 Refresh metadata
+
 sudo dnf clean all
+
 sudo dnf makecache
 
-4. Install Jenkins
+**4. Install Jenkins**
 sudo dnf install -y jenkins
 
 
-Verify installation:
+**Verify installation:**
 
 jenkins --version
 
-5. Start and Enable Jenkins
+**5. Start and Enable Jenkins**
 sudo systemctl enable jenkins
+
 sudo systemctl start jenkins
+
 sudo systemctl status jenkins
 
-6. Open Firewall Port (If Firewalld is Enabled)
+**6. Open Firewall Port (If Firewalld is Enabled)**
+
 sudo firewall-cmd --permanent --add-port=8080/tcp
+
 sudo firewall-cmd --reload
 
-7. Access Jenkins UI
+**7. Access Jenkins UI**
 
-Open in browser:
+**Open in browser:**
 
 http://<EC2_PUBLIC_IP>:8080
 
@@ -82,46 +92,51 @@ http://<EC2_PUBLIC_IP>:8080
 
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
-8. Install Docker (Jenkins Agent Requirement)
+**8. Install Docker (Jenkins Agent Requirement)**
 
 **Docker must be installed from the official Docker repo.**
-Remove old Docker packages (safe)
+**Remove old Docker packages (safe)**
+
 sudo dnf remove -y docker docker-client docker-common docker-latest \
 docker-latest-logrotate docker-logrotate docker-engine
 
-Install required plugin
+**Install required plugin**
 sudo dnf install -y dnf-plugins-core
 
-Add Docker CE repository
+**Add Docker CE repository**
+
 sudo dnf config-manager --add-repo \
 https://download.docker.com/linux/rhel/docker-ce.repo
 
-Install Docker Engine
+
+**Install Docker Engine**
 sudo dnf install -y docker-ce docker-ce-cli containerd.io
 
-9. Start and Enable Docker
+**9. Start and Enable Docker**
+
 sudo systemctl enable docker
+
 sudo systemctl start docker
 
 
-Verify:
+**Verify:**
 
 docker version
 docker run hello-world
 
-10. Allow Jenkins & Users to Run Docker (IMPORTANT)
+**10. Allow Jenkins & Users to Run Docker (IMPORTANT)**
 
-Add users to Docker group:
+**Add users to Docker group:**
 
 sudo usermod -aG docker ec2-user
 sudo usermod -aG docker jenkins
 
 
-Apply group changes:
+**Apply group changes:**
 
 newgrp docker
 
 
-Restart Jenkins to apply permissions:
+**Restart Jenkins to apply permissions:**
 
 sudo systemctl restart jenkins
