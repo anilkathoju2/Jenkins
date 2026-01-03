@@ -140,9 +140,6 @@ sudo systemctl restart docker
 
 **Apply group changes:**
 
-newgrp docker
-
-
 **Restart Jenkins to apply permissions:**
 
 sudo systemctl restart jenkins
