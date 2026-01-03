@@ -39,7 +39,8 @@ Verify:
 
 java -version
 
-3. Add Jenkins Repository
+**3. Add Jenkins Repository**
+
 **Remove any broken repo (if exists)**
 
 sudo rm -f /etc/yum.repos.d/jenkins.repo
