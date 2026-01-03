@@ -47,14 +47,19 @@ sudo rm -f /etc/yum.repos.d/jenkins.repo
 
 **Add Jenkins repo using curl (recommended)**
 
-sudo curl -fsSL https://pkg.jenkins.io/redhat/jenkins.repo \
+sudo curl -fsSL https://pkg.jenkins.io/redhat-stable/jenkins.repo \
   -o /etc/yum.repos.d/jenkins.repo
 
 
+**Verify:**
+ls -l /etc/yum.repos.d/jenkins.repo
 
-**Import Jenkins GPG key**
 
-sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io-2023.key
+**Import the Jenkins GPG key (important)**
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+
+
 
 Refresh metadata
 
@@ -62,27 +67,18 @@ sudo dnf clean all
 
 sudo dnf makecache
 
-**4. Install Jenkins**
+**Continue Jenkins installation (correct order)**
+sudo dnf upgrade -y
+sudo dnf install -y fontconfig java-21-openjdk
 sudo dnf install -y jenkins
-
-
-**Verify installation:**
-
-jenkins --version
-
-**5. Start and Enable Jenkins**
-sudo systemctl enable jenkins
-
+sudo systemctl daemon-reload
 sudo systemctl start jenkins
-
+sudo systemctl enable jenkins
 sudo systemctl status jenkins
 
-**6. Open Firewall Port (If Firewalld is Enabled)**
-
-sudo firewall-cmd --permanent --add-port=8080/tcp
-
-sudo firewall-cmd --reload
-
+jenkins --version
+sudo systemctl status jenkins
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 **7. Access Jenkins UI**
 
 **Open in browser:**
@@ -120,6 +116,7 @@ sudo systemctl enable docker
 
 sudo systemctl start docker
 
+**logout** & **login**
 
 **Verify:**
 
@@ -136,7 +133,7 @@ sudo usermod -aG docker jenkins
 **Restart docker service**  
 sudo systemctl restart docker
 
-**logout** & **login**
+
 
 **Restart Jenkins to apply permissions:**
 
