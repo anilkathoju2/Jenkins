@@ -7,15 +7,18 @@ pipeline {
       steps {
         sh 'node --version'
       }
-      stage('build') {
-        steps {
-           sh 'docker build -t my-node:latest '
-        }
-        stage('run') {
+    stage('Build') {
             steps {
-                sh 'docker run -d --name my-node-app -p 3000:3000 my-node-app:latest'
+                sh 'docker build -t my-node-app:latest .'
             }
         }
+     stage('Run') {
+            steps {
+                sh '''
+                  docker rm -f my-node-app || true
+                  docker run -d --name my-node-app -p 3000:3000 my-node-app:latest
+                '''
+            }
       }
     }
   }
