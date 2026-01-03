@@ -1,10 +1,12 @@
-pipeline{
-    agent any 
-    stages {
-      stage ('Hello') {
-        steps {
-          echo 'hello-world'
-              }
-          }
-     }
+pipeline {
+  agent {
+    docker { image 'node:16-alpine' }
+  }
+  stages {
+    stage('Test') {
+      steps {
+        sh 'node --version'
+      }
+    }
+  }
 }
