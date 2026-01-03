@@ -132,6 +132,11 @@ docker run hello-world
 sudo usermod -aG docker ec2-user
 sudo usermod -aG docker jenkins
 
+**Restart docker service**  
+sudo systemctl restart docker
+
+**logout** & **login**
+
 
 **Apply group changes:**
 
