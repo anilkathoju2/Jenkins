@@ -137,9 +137,6 @@ sudo systemctl restart docker
 
 **logout** & **login**
 
-
-**Apply group changes:**
-
 **Restart Jenkins to apply permissions:**
 
 sudo systemctl restart jenkins
